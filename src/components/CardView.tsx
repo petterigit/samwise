@@ -4,7 +4,11 @@ import '../styles/CardView.css';
 import { Card } from './Card';
 import { CardInfo } from './CardInfo';
 
-export const CardView = () => {
+type CardViewProps = {
+    currentDeck: {};
+} 
+
+export const CardView = ({ currentDeck } : CardViewProps) => {
     const [infoVisibility, setInfoVisibility] = useState(false);
 
     const showCardInfo = () => {
