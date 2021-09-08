@@ -1,22 +1,19 @@
 import '../styles/DeckSearch.css';
 import {TextInput} from './TextInput';
+import { DeckObject } from '../types';
 
 type DeckSearchProps = {
-  updateDeck: ({name: string, details: string, heroes: {}, slots: {} }) => void;
+  updateDeck: (fetchData: DeckObject) => void;
 }
 
 export const DeckSearch = ({ updateDeck } : DeckSearchProps) => {
 
-  const getDeck = (fetchData: {name: string, details: string, heroes: {}, slots: {} }) => {
-    console.log(fetchData)
+  const getDeck = (fetchData: DeckObject) => {
     const newDeck = {
       name: fetchData.name,
-      details: fetchData.details,
       heroes: fetchData.heroes,
-      slots: fetchData.slots,
-
+      slots: fetchData.slots
     }
-
     updateDeck(newDeck)
   }
 

@@ -1,17 +1,18 @@
 import '../styles/Card.css';
 
 type CardProps = {
+    imagesrc: string
     showCardInfo: () => void;
   }
 
-export const Card = ({ showCardInfo } : CardProps) => {
+export const Card = ({ imagesrc, showCardInfo } : CardProps) => {
     
 
     return (
         <div className="Card">
             <img 
             className="CardImg"
-            src="https://ringsdb.com/bundles/cards/141002.png"
+            src={"https://ringsdb.com" + imagesrc}
             alt="A LOTR card"
             onClick={() => {showCardInfo()}} />
         </div>

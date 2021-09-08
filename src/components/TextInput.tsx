@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 import '../styles/TextInput.css';
 import { getDeckByID } from '../utils/fetch';
+import { DeckObject } from '../types';
 
 type TextInputProps = {
-  returnDeck: (fetchData: {}) => void
+  returnDeck: (fetchData: DeckObject) => void
 }
 
 export const TextInput = ({ returnDeck }: TextInputProps) => {
@@ -12,15 +13,13 @@ export const TextInput = ({ returnDeck }: TextInputProps) => {
 
   const fetchDeck = async () => {
     const id = parseInt(textInputValue);
-    const fetchData = await getDeckByID(id) as {name: string, description: string, heroes: {}, slots: {}};
+    const fetchData = await getDeckByID(id) as DeckObject;
     if (fetchData) {
       returnDeck(fetchData);
     } else {
       console.log("Fetch returned an error")
     }
   }
-
-  
   return (
     <div className="TextInput" >
         <input onChange={ (e) => setTextInputValue(e.target.value)} type="text" />
