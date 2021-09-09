@@ -12,6 +12,11 @@ type CardViewProps = {
 
 export const CardView = ({ currentDeck } : CardViewProps) => {
     const [infoVisibility, setInfoVisibility] = useState(false);
+    const [jsxField, setJsxField] = useState<any>([]);
+
+    useEffect( () => {
+        renderDeck();
+    }, [currentDeck])
 
     const showCardInfo = () => {
         setInfoVisibility(true);
@@ -21,34 +26,50 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
         setInfoVisibility(false);
     }
 
-    const renderDeck = () => {
-        let jsxField = [];
-        jsxField.push(<h2>{currentDeck.name}</h2>);
-
-
-        /* TODO
-        const slots = currentDeck.slots;
-         for (const [key, value] of Object.entries(currentDeck.slots)) {
-            -- let newCard = await getInfo(key);
-            newJsxField.push(<Card imagesrc={newCard.imagesrc} showCardInfo={showCardInfo}/>);
-          };
-        const heroes = currentDeck.heroes;
-        for (const [key, value] of Object.entries(currentDeck.heroes)) {
-            -- let newCard = getCardByID(key) as CardObject;
-            jsxField.push(<Card imagesrc={newCard.imagesrc} showCardInfo={showCardInfo}/>);
+    const fetchCard = async (key: string) => {
+        let fetchData = await getCardByID(key) as CardObject;
+        if (fetchData) {
+          return(fetchData);
+        } else {
+          console.log("Fetch returned an error")
         }
-        return(jsxField);
-    */
+      }
+    
+      const fetchCards = async (heroes: {}[]) => {
+        for (const [key, value] of Object.entries(currentDeck.heroes)) {
+            let newCard = await fetchCard(key) as CardObject;
+            //jsxField.push(<Card imagesrc={newCard.imagesrc} showCardInfo={showCardInfo}/>);
+        }
+      }
 
-        for (const [key, value] of Object.entries(currentDeck.slots)) {
-            jsxField.push(<Card imagesrc={"/bundles/cards/141002.png"} showCardInfo={showCardInfo}/>);
-          };
-        return jsxField;
+    const renderDeck = async () => {
+        let newJsxField = [];
+        newJsxField.push(<h2>{currentDeck.name}</h2>);
+        const heroes = currentDeck.heroes;
+        const fetchCards = await Promise.all(Object.keys(heroes).map(heroKey => {
+            //console.log(hero);
+            const fetchData = fetchCard(heroKey);
+            return fetchData;
+        }));
+        
+        let jsxCards = [];
+        for (let i = 0; i<fetchCards.length; i++) {
+            if (fetchCards[i] === undefined) {
+                console.log("undef fetchCard");
+            } else {
+                jsxCards[i] = <Card imagesrc={fetchCards[i]!.imagesrc} showCardInfo={showCardInfo} />
+            }
+            
+        }
+        console.log(jsxCards);
+        newJsxField.push(jsxCards);
+        setJsxField(newJsxField);
+        //console.log(jsxField);
     }
 
   return (
     <div className="CardView">
-        {renderDeck()}
+        {jsxField}
         {infoVisibility === true && 
             <CardInfo closeCardInfo={closeCardInfo} />
         }
