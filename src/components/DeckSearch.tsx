@@ -11,8 +11,7 @@ export const DeckSearch = ({ updateDeck } : DeckSearchProps) => {
   const getDeck = (fetchData: DeckObject) => {
     const newDeck = {
       name: fetchData.name,
-      heroes: fetchData.heroes,
-      slots: fetchData.slots
+      heroes: fetchData.heroes
     }
     updateDeck(newDeck)
   }

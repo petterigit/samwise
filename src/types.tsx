@@ -1,7 +1,6 @@
 export type DeckObject = {
     name: string,
-    heroes: {id: number}[],
-    slots: {id: number}[]
+    heroes: {id: number}[]
   }
 
 export type CardObject = {
