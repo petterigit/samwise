@@ -6,3 +6,9 @@ export type DeckObject = {
 export type CardObject = {
     imagesrc: string
 }
+
+export type CardInfoObject = {
+    src: string,
+    name: string,
+    details: string
+}

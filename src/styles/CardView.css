@@ -1,4 +1,4 @@
-.CardView {
+.CardView-Cards {
   display: flex;
   flex-flow: row wrap;
 }
