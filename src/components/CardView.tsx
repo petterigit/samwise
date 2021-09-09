@@ -17,16 +17,14 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
     const [jsxHeader, setJsxHeader] = useState<any>([]);
     const [currentCards, setCurrentCards] = useState<any>([]);
 
-    /* Get hero cards when searched deck changes */
-    useEffect( () => {
-        getCurrentCards();
-    }, [currentDeck])
 
-    /* Render new heroes when current cards info has been fetched */
-    useEffect( () => {
-        renderDeck();
-    }, [currentCards])
+    /* USE EFFECTS 
+        Gets current cards when a new deck is searched
+        Renders curret cards when their info has been fetched
+        */
 
+    useEffect( () => {
+    console.log("Fetching card info..");
     const getCurrentCards = async () => {
         const heroes = currentDeck.heroes;
         const heroKeys = Object.keys(heroes);
@@ -37,7 +35,7 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
         }));
         setCurrentCards(fetchedCards);
     }
-
+    // Single Card Fetch
     const fetchCard = async (key: string) => {
         let fetchData = await getCardByID(key) as CardObject;
         if (fetchData) {
@@ -46,9 +44,35 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
           console.log("Fetch returned an error")
         }
       }
-
-      const renderDeck = async () => {
+    // Deck name can be rendered from current Deck
+    const renderHeader = () =>  {
         setJsxHeader(<h2>{currentDeck.name}</h2>);
+    }
+
+    getCurrentCards();
+    renderHeader();
+    }, [currentDeck]);
+
+    /* Render Deck */
+    useEffect( () => {
+        console.log("Rendering deck..");
+        const showCardInfo = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+            const target = e.target as HTMLImageElement;
+    
+            let cardDetails = "";
+            let cardName = "";
+            for (let i = 0; i<currentCards.length ; i++) {
+                if (currentCards[i].code === target.id) {
+                    cardDetails = currentCards[i].text
+                    cardName = currentCards[i].name
+                }
+            }
+    
+            let newCardInfo = {src: target.src, name: cardName, details:cardDetails}
+            setCurrentCardInfo(newCardInfo);
+            setInfoVisibility(true);
+        }
+
 
         const heroes = currentDeck.heroes;
         const heroKeys = Object.keys(heroes);
@@ -60,29 +84,11 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
             }
         }
         setJsxCards(newJsxCards);
-    }
+    }, [currentCards, currentDeck.heroes]);
 
-    const showCardInfo = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-        const target = e.target as HTMLImageElement;
-
-        let cardDetails = "";
-        let cardName = "";
-        for (let i = 0; i<currentCards.length ; i++) {
-            if (currentCards[i].code === target.id) {
-                cardDetails = currentCards[i].text
-                cardName = currentCards[i].name
-            }
-        }
-
-        let newCardInfo = {src: target.src, name: cardName, details:cardDetails}
-        setCurrentCardInfo(newCardInfo);
-        setInfoVisibility(true);
-    }
     const closeCardInfo = () => {
         setInfoVisibility(false);
     }
-    
-    
 
   return (
     <div className="CardView">
