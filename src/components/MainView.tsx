@@ -18,7 +18,7 @@ export const MainView = () => {
 
 
   return (
-    <div className="MainView">
+    <div className="main-view">
         <Header/>
         <DeckSearch updateDeck={updateDeck}/>
         {currentDeck !== undefined && 

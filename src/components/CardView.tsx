@@ -12,7 +12,7 @@ type CardViewProps = {
 
 export const CardView = ({ currentDeck } : CardViewProps) => {
     const [infoVisibility, setInfoVisibility] = useState(false);
-    const [currentCardInfo, setCurrentCardInfo] = useState<CardInfoObject>({src: "", name: "", details:"Couldn't get card details.."});
+    const [currentCardInfo, setCurrentCardInfo] = useState({} as CardInfoObject);
     const [jsxCards, setJsxCards] = useState<any>([]);
     const [jsxHeader, setJsxHeader] = useState<any>([]);
     const [currentCards, setCurrentCards] = useState<any>([]);
@@ -58,19 +58,30 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
         console.log("Rendering deck..");
         const showCardInfo = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
             const target = e.target as HTMLImageElement;
-    
-            let cardDetails = "";
-            let cardName = "";
+            
+            let newCardInfo;
             for (let i = 0; i<currentCards.length ; i++) {
-                if (currentCards[i].code === target.id) {
-                    cardDetails = currentCards[i].text
-                    cardName = currentCards[i].name
+                let card = currentCards[i]
+                if (card.code === target.id && card) {
+                    newCardInfo = {
+                        src: card.imagesrc, 
+                        name: card.name, 
+                        details: card.text,
+                        flavor: card.flavor,
+                        traits: card.traits,
+                        threat: card.threat,
+                        willpower: card.willpower,
+                        attack: card.attack,
+                        defense: card.defense,
+                        health: card.health,
+                        pack_name: card.pack_name,
+                        url: card.url,
+                        illustrator: card.illustrator
+                    }
+                    setCurrentCardInfo(newCardInfo);
+                    setInfoVisibility(true);
                 }
-            }
-    
-            let newCardInfo = {src: target.src, name: cardName, details:cardDetails}
-            setCurrentCardInfo(newCardInfo);
-            setInfoVisibility(true);
+            }      
         }
 
 
@@ -78,10 +89,9 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
         const heroKeys = Object.keys(heroes);
         let newJsxCards = [];
         for (let i = 0; i<currentCards.length; i++) {
-            if (currentCards[i] === undefined) {
-            } else {
-                newJsxCards[i] = <Card key={heroKeys[i]} id={heroKeys[i]} imagesrc={currentCards[i]!.imagesrc} showCardInfo={showCardInfo} />
-            }
+            if (!currentCards[i] ) continue;
+            newJsxCards[i] = <Card key={heroKeys[i]} id={heroKeys[i]} imagesrc={currentCards[i]!.imagesrc} showCardInfo={showCardInfo} />
+
         }
         setJsxCards(newJsxCards);
     }, [currentCards, currentDeck.heroes]);
@@ -91,11 +101,11 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
     }
 
   return (
-    <div className="CardView">
-        <div className="CardView-Header">
+    <div className="card-view">
+        <div className="card-view-header">
             {jsxHeader}
         </div>
-        <div className="CardView-Cards">
+        <div className="card-view-cards">
             {jsxCards}
         </div>
         {infoVisibility === true && 

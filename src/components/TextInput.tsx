@@ -21,7 +21,7 @@ export const TextInput = ({ returnDeck }: TextInputProps) => {
     }
   }
   return (
-    <div className="TextInput" >
+    <div className="text-input" >
         <input onChange={ (e) => setTextInputValue(e.target.value)} type="text" />
         <button onClick={ () => fetchDeck() }> Search </button>
     </div>

@@ -11,11 +11,11 @@ export const Card = ({ key, id, imagesrc, showCardInfo } : CardProps) => {
     
 
     return (
-        <div className="Card">
+        <div className="card">
             <img
             key={key}
             id={id} 
-            className="CardImg"
+            className="card-img"
             src={"https://ringsdb.com" + imagesrc}
             alt="A LOTR card"
             onClick={(e) => {showCardInfo(e)}} />

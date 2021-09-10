@@ -1,16 +1,4 @@
-.CardInfo {
-  position: absolute;
-  left: 5%;
-  right: 5%;
-  top: 5%;
-  background-color: white;
-  z-index: 1;
-  display: table;
-  float: left;
-  width: 90%;
-}
-
-.CardInfo-Background {
+.card-info-background {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   left: 0;
@@ -19,31 +7,67 @@
   height: 100%;
 }
 
-.CardInfo-Header {
-  padding-left: 16px;
-  display: table-cell;
+.card-info-container {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: 5%;
+  background-color: white;
+  z-index: 1;
+  display: grid;
+  float: left;
+  width: 90%;
 }
-.CardInfo-ExitButton {
+
+.card-info-header {
+  grid-column-start: 0;
+  grid-column-end: 1;
+  grid-row-start: 0;
+  grid-row-end: 1;
+}
+
+.card-info-exit {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 0;
+  grid-row-end: 1;
+}
+.card-info-card-header {
+  grid-column-start: 0;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.card-info-details-header {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.card-info-img {
+  grid-column-start: 0;
+  grid-column-end: 1;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+.card-info-hero-stats {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+.card-info-hero-details {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.card-info-exit-button {
   margin-right: 4px;
-  display: table-cell;
   float: right;
 }
-
-.CardInfo-Details {
-  display: table-row;
-}
-
-.CardInfo-Card {
-  padding-left: 16px;
-  padding-right: 4px;
-  display: table-cell;
-}
-.CardInfo-Img {
+.card-info-img {
   max-width: 300px;
   max-height: 400px;
-}
-
-.CardInfo-HeroDetails {
-  padding-left: 8px;
-  display: table-cell;
 }

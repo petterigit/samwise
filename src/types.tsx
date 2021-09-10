@@ -10,5 +10,15 @@ export type CardObject = {
 export type CardInfoObject = {
     src: string,
     name: string,
-    details: string
+    details: string,
+    flavor: string,
+    traits: string,
+    threat: number,
+    willpower: number,
+    attack: number,
+    defense: number,
+    health: number,
+    pack_name: string,
+    url: string,
+    illustrator: string
 }
