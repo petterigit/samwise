@@ -16,6 +16,7 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
     const [jsxCards, setJsxCards] = useState<any>([]);
     const [jsxHeader, setJsxHeader] = useState<any>([]);
     const [currentCards, setCurrentCards] = useState<any>([]);
+    const [loadingMessage, setLoadingMessage] = useState(true);
 
 
     /* USE EFFECTS 
@@ -24,38 +25,37 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
         */
 
     useEffect( () => {
-    console.log("Fetching card info..");
-    const getCurrentCards = async () => {
-        const heroes = currentDeck.heroes;
-        const heroKeys = Object.keys(heroes);
+        setLoadingMessage(true);
+        const getCurrentCards = async () => {
+            const heroes = currentDeck.heroes;
+            const heroKeys = Object.keys(heroes);
 
-        const fetchedCards = await Promise.all(heroKeys.map(heroKey => {
-            const fetchData = fetchCard(heroKey);
-            return fetchData;
-        }));
-        setCurrentCards(fetchedCards);
-    }
-    // Single Card Fetch
-    const fetchCard = async (key: string) => {
-        let fetchData = await getCardByID(key) as CardObject;
-        if (fetchData) {
-          return(fetchData);
-        } else {
-          console.log("Fetch returned an error")
+            const fetchedCards = await Promise.all(heroKeys.map(heroKey => {
+                const fetchData = fetchCard(heroKey);
+                return fetchData;
+            }));
+            setCurrentCards(fetchedCards);
         }
-      }
-    // Deck name can be rendered from current Deck
-    const renderHeader = () =>  {
-        setJsxHeader(<h2>{currentDeck.name}</h2>);
-    }
-
-    getCurrentCards();
-    renderHeader();
+        // Single Card Fetch
+        const fetchCard = async (key: string) => {
+            let fetchData = await getCardByID(key) as CardObject;
+            if (fetchData) {
+            return(fetchData);
+            } else {
+            console.log("Fetch returned an error")
+            }
+        }
+        // Deck name can be rendered from current Deck
+        const renderHeader = () =>  {
+            setJsxHeader(<h2>{currentDeck.name}</h2>);
+        }
+        
+        getCurrentCards();
+        renderHeader();
     }, [currentDeck]);
 
     /* Render Deck */
     useEffect( () => {
-        console.log("Rendering deck..");
         const showCardInfo = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
             const target = e.target as HTMLImageElement;
             
@@ -83,14 +83,12 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
                 }
             }      
         }
-
-
         const heroes = currentDeck.heroes;
         const heroKeys = Object.keys(heroes);
         let newJsxCards = [];
         for (let i = 0; i<currentCards.length; i++) {
             if (!currentCards[i] ) continue;
-            newJsxCards[i] = <Card key={heroKeys[i]} id={heroKeys[i]} imagesrc={currentCards[i]!.imagesrc} showCardInfo={showCardInfo} />
+            newJsxCards[i] = <Card key={heroKeys[i]} id={heroKeys[i]} imagesrc={currentCards[i]!.imagesrc} imageLoaded={imageLoaded} showCardInfo={showCardInfo} />
 
         }
         setJsxCards(newJsxCards);
@@ -99,11 +97,17 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
     const closeCardInfo = () => {
         setInfoVisibility(false);
     }
+    const imageLoaded = () => {
+        setLoadingMessage(false);
+    }
 
   return (
     <div className="card-view">
         <div className="card-view-header">
             {jsxHeader}
+            {loadingMessage === true &&
+                <p>Getting cards.. (2)</p> 
+            }
         </div>
         <div className="card-view-cards">
             {jsxCards}

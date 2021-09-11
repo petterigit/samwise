@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../styles/CardInfo.css';
 import { CardInfoObject } from '../types';
+import xIcon from '../x.svg';
 
 const feather = require('feather-icons');
 const _ = require('lodash');
@@ -24,6 +25,25 @@ const getIconExplanation = (keyWord: string) => {
             return("<p>Leadership: " + feather.icons.target.toSvg() + "</p>")
         default:
             return("");
+    }
+}
+
+const getSvg = (keyWord: string) => {
+    switch(keyWord) {
+        case 'willpower':
+            return (feather.icons.sun.toSvg());
+        case 'defense':
+            return (feather.icons.shield.toSvg());
+        case 'attack':
+            return (feather.icons["pen-tool"].toSvg());
+        case 'spirit':
+            return (feather.icons.star.toSvg());
+        case 'leadership':
+            return (feather.icons.flag.toSvg());
+        case 'tactics':
+            return (feather.icons.target.toSvg());
+        default:
+            return (" {Should have icon} " + keyWord);
     }
 }
 
@@ -54,29 +74,9 @@ export const CardInfo = ( {currentCardInfo, closeCardInfo } : CardInfoProps) => 
                 getLetters = false;
 
                 // Append image of symbol
-                switch(keyWord) {
-                    case 'willpower':
-                        newDetails = newDetails + feather.icons.sun.toSvg();
-                        break;
-                    case 'defense':
-                            newDetails = newDetails + feather.icons.shield.toSvg();
-                            break;
-                    case 'attack':
-                        newDetails = newDetails + feather.icons["pen-tool"].toSvg();
-                        break;
-                    case 'spirit':
-                        newDetails = newDetails + feather.icons.star.toSvg();
-                        break;
-                    case 'leadership':
-                        newDetails = newDetails + feather.icons.flag.toSvg();
-                        break;
-                    case 'tactics':
-                        newDetails = newDetails + feather.icons.target.toSvg();
-                        break;
-                    default:
-                        newDetails = newDetails + " {Should have icon} " + keyWord;
-                }
+                
                 keyWords.push(keyWord);
+                newDetails = newDetails + getSvg(keyWord);
                 keyWord = "";
                 continue
             }
@@ -107,10 +107,10 @@ export const CardInfo = ( {currentCardInfo, closeCardInfo } : CardInfoProps) => 
                     </h2>
                 </div>
                 <div className="card-info-exit">
-                    <button className="card-info-exit-button"
-                            onClick={()=>closeCardInfo()}
+                    <button
+                            onClick={closeCardInfo}
                         >
-                        Close Info
+                    <img src={xIcon} alt="Close Info" />
                     </button>
                 </div>
                 <div className="card-info-card-header">
@@ -120,8 +120,7 @@ export const CardInfo = ( {currentCardInfo, closeCardInfo } : CardInfoProps) => 
                     <h3> Hero info </h3>
                 </div>
                 <div className="card-info-img">
-                    <img 
-                    className="card-info-img"
+                    <img
                     src={"https://ringsdb.com"+currentCardInfo.src}
                     alt="A LOTR card" />
                 </div>

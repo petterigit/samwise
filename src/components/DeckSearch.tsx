@@ -18,7 +18,7 @@ export const DeckSearch = ({ updateDeck } : DeckSearchProps) => {
 
   return (
     <div className="deck-search">
-        <p>Search for a decklist here</p>
+        <p>Search for a decklist here:</p>
         <TextInput returnDeck={getDeck}/>
     </div>
   );
