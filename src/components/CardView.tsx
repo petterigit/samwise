@@ -106,7 +106,7 @@ export const CardView = ({ currentDeck } : CardViewProps) => {
         <div className="card-view-header">
             {jsxHeader}
             {loadingMessage === true &&
-                <p>Getting cards.. (2)</p> 
+                <p>Getting cards..</p> 
             }
         </div>
         <div className="card-view-cards">
