@@ -2,100 +2,33 @@ import { useState, useEffect } from "react";
 import "../styles/CardInfo.css";
 import { CardInfoObject } from "../types";
 import xIcon from "../x.svg";
-
-const feather = require("feather-icons");
-const _ = require("lodash");
+import { getIconExplanation, getHeroDetails } from "../utils/parseDetails";
+import _ from "lodash";
 
 type CardInfoProps = {
 	currentCardInfo: CardInfoObject;
 	closeCardInfo: () => void;
 };
 
-const getIconExplanation = (keyWord: string) => {
-	switch (keyWord) {
-		case "willpower":
-			return "<p>Willpower: " + feather.icons.sun.toSvg() + "</p>";
-		case "defense":
-			return "<p>Defense: " + feather.icons.shield.toSvg() + "</p>";
-		case "attack":
-			return "<p>Attack: " + feather.icons["pen-tool"].toSvg() + "</p>";
-		case "spirit":
-			return "<p>Spirit: " + feather.icons.star.toSvg() + "</p>";
-		case "leadership":
-			return "<p>Leadership: " + feather.icons.target.toSvg() + "</p>";
-		case "tactics":
-			return "<p>Tactics: " + feather.icons.flag.toSvg() + "</p>";
-		case "lore":
-			return "<p>Lore: " + feather.icons["book-open"].toSvg() + "</p>";
-		default:
-			return "";
-	}
-};
-
-const getSvg = (keyWord: string) => {
-	switch (keyWord) {
-		case "willpower":
-			return feather.icons.sun.toSvg();
-		case "defense":
-			return feather.icons.shield.toSvg();
-		case "attack":
-			return feather.icons["pen-tool"].toSvg();
-		case "spirit":
-			return feather.icons.star.toSvg();
-		case "leadership":
-			return feather.icons.flag.toSvg();
-		case "tactics":
-			return feather.icons.target.toSvg();
-		case "lore":
-			return feather.icons["book-open"].toSvg();
-		default:
-			return " {Should have icon} " + keyWord;
-	}
-};
-
 export const CardInfo = ({ currentCardInfo, closeCardInfo }: CardInfoProps) => {
-	/* Parsing details to show symbols in place of:
-        [willpower]
-        [attack]
-        [defense]
-        */
 	const [parsedDetails, setParsedDetails] = useState("");
 	const [iconExplanation, setIconExplanation] = useState("");
 
 	useEffect(() => {
+		// Get card details from state and format them
 		let currentDetails = currentCardInfo.text;
-		let newDetails = "";
-		let keyWord = "";
-		let keyWords = [];
-		let getLetters = false;
-		for (let i = 0; i < currentDetails.length; i++) {
-			// When symbol starts, log keyword instead of normal letters
-			if (currentDetails[i] === "[") {
-				getLetters = true;
-				continue;
-			} else if (currentDetails[i] === "]") {
-				getLetters = false;
+		let detailsReturnArray = getHeroDetails(currentDetails);
+		let newDetails = detailsReturnArray.details;
+		let keyWords = detailsReturnArray.keyWords;
 
-				// Append image of symbol
-
-				keyWords.push(keyWord);
-				newDetails = newDetails + getSvg(keyWord);
-				keyWord = "";
-				continue;
-			}
-			if (getLetters) {
-				keyWord = keyWord + currentDetails[i];
-			} else {
-				newDetails = newDetails + currentDetails[i];
-			}
-		}
-
-		/* Set corresponsive icon explanations */
+		// Set corresponsive icon explanations
 		let newIconExplanations = "";
 		keyWords = _.uniq(keyWords);
 		for (const keyWord of keyWords) {
 			newIconExplanations = newIconExplanations + getIconExplanation(keyWord);
 		}
+
+		// Set state
 		setIconExplanation(newIconExplanations);
 		setParsedDetails(newDetails);
 	}, [currentCardInfo.text]);
@@ -121,11 +54,9 @@ export const CardInfo = ({ currentCardInfo, closeCardInfo }: CardInfoProps) => {
 					<img src={"https://ringsdb.com" + currentCardInfo.imagesrc} alt="A LOTR card" />
 				</div>
 				<div className="card-info-hero-stats">
-					<h4>
-						{" "}
-						{currentCardInfo.name} <br />{" "}
-					</h4>
 					<p>
+						<b>{currentCardInfo.name}</b> <br />
+						<br />
 						Threat: {currentCardInfo.threat} <br />
 						Willpower: {currentCardInfo.willpower} <br />
 						Attack: {currentCardInfo.attack} <br />
@@ -134,8 +65,7 @@ export const CardInfo = ({ currentCardInfo, closeCardInfo }: CardInfoProps) => {
 						<br />
 						Pack: {currentCardInfo.pack_name} <br />
 						Illustrator: {currentCardInfo.illustrator} <br />
-						<a href="url">{currentCardInfo.url} </a>
-						<br />
+						<a href="url">{currentCardInfo.url} </a> <br />
 					</p>
 				</div>
 				<div className="card-info-hero-details">
@@ -143,7 +73,7 @@ export const CardInfo = ({ currentCardInfo, closeCardInfo }: CardInfoProps) => {
 					<br />
 					<p dangerouslySetInnerHTML={{ __html: currentCardInfo.flavor }} />
 					<br />
-					{iconExplanation !== "" && (
+					{iconExplanation && (
 						<div>
 							<p> Icons used in keywords: </p>
 							<p dangerouslySetInnerHTML={{ __html: iconExplanation }} />

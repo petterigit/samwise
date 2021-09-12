@@ -28,7 +28,7 @@ export const DeckSearch = ({ updateDeck }: DeckSearchProps) => {
 		<div className="deck-search">
 			<p>Search for a decklist here:</p>
 			<TextInput returnDeck={getDeck} />
-			{fetchError && <p>Couldn't find a deck with given search input!</p>}
+			<p>{fetchError ? "Couldn't find a deck with given search input!" : ""}</p>
 		</div>
 	);
 };

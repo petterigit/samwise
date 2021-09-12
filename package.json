@@ -44,6 +44,7 @@
     ]
   },
   "devDependencies": {
-    "@types/feather-icons": "^4.7.0"
+    "@types/feather-icons": "^4.7.0",
+    "@types/lodash": "^4.14.172"
   }
 }

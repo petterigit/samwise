@@ -1,3 +1,5 @@
+import { CardInfoObject } from "../types";
+
 export const getDeckByID = (id: number) => {
     const url = "http://ringsdb.com/api/public/decklist/" + id;
     return new Promise(resolve => {
@@ -27,3 +29,13 @@ export const getCardByID = (id: string) => {
             });
     });
 }
+
+export const fetchCard = async (key: string) => {
+    let fetchData = (await getCardByID(key)) as CardInfoObject;
+    if (!fetchData) {
+        console.log("Fetch returned an error");
+        return undefined;
+    } else {
+        return fetchData;
+    }
+};
