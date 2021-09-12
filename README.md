@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Development npm version: 6.14.14
+Development npm version: 7.23.0
 
 Development node version: 14.17.5
 
