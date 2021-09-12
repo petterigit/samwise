@@ -1,6 +1,19 @@
-# Getting Started with Create React App
+# React Project Info
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+Development npm version: 6.14.14
+
+Development node version: 14.17.5
+
+Startup steps:
+1. Clone repository
+2. Run npm i
+3. Run npm start
+4. Navigate to localhost:3000
+
+Developed on Firefox, works well on atleast Firefox and Chrome
+
 
 ## Task Description
 
