@@ -1,62 +1,62 @@
 .card-info-background {
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
 }
 .card-info-container {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: 90%;
-  top: 5%;
-  background-color: white;
-  z-index: 1;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: 400px 250px 1fr;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "header header exit"
-    "cardheader detailsheader detailsheader"
-    "cardimg cardstats carddetails";
-  column-gap: 50px;
-  row-gap: none;
-  align-items: start;
-  justify-content: center;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+	top: 5%;
+	background-color: white;
+	z-index: 1;
+	padding: 10px;
+	display: grid;
+	grid-template-columns: 400px 250px 1fr;
+	grid-template-rows: auto;
+	grid-template-areas:
+		"header header exit"
+		"cardheader detailsheader detailsheader"
+		"cardimg cardstats carddetails";
+	column-gap: 50px;
+	row-gap: none;
+	align-items: start;
+	justify-content: center;
 }
 .card-info-header {
-  grid-area: header;
+	grid-area: header;
 }
 .card-info-exit {
-  grid-area: exit;
-  justify-self: end;
+	grid-area: exit;
+	justify-self: end;
 }
 .card-info-exit button {
-  background-color: gainsboro;
-  border-radius: 8px;
+	background-color: gainsboro;
+	border-radius: 8px;
 }
 .card-info-card-header {
-  grid-area: cardheader;
+	grid-area: cardheader;
 }
 .card-info-details-header {
-  grid-area: detailsheader;
+	grid-area: detailsheader;
 }
 .card-info-img {
-  grid-area: cardimg;
+	grid-area: cardimg;
 }
 .card-info-img img {
-  max-width: 400px;
-  min-width: 400px;
+	max-width: 400px;
+	min-width: 400px;
 }
 
 .card-info-hero-stats {
-  grid-area: cardstats;
+	grid-area: cardstats;
 }
 .card-info-hero-details {
-  grid-area: carddetails;
+	grid-area: carddetails;
 }

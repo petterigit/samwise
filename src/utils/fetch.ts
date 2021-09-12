@@ -8,7 +8,7 @@ export const getDeckByID = (id: number) => {
             })
             .catch((error) => {
                 resolve(undefined);
-                console.error("Error in getDeckByID 'GET' request:", error);
+                //console.error("Error in getDeckByID 'GET' request:", error);
             });
     });
 }
@@ -23,7 +23,7 @@ export const getCardByID = (id: string) => {
             })
             .catch((error) => {
                 resolve(undefined);
-                console.error("Error in getCardByID 'GET' request:", error);
+                //console.error("Error in getCardByID 'GET' request:", error);
             });
     });
 }
